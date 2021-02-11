@@ -1,56 +1,48 @@
 package com.company;
+
 /*
-Find the maximum and minimum element in an array
+Merging Two Sorted Array
  */
 
 public class Main {
     public static void main(String[] args) {
-//        int [] a = {10,1,5,100,20} ;
-        int [] a = {20,18,0,-1,70};
-        System.out.println("Printing array elements");
-        printArray(a);
-       int max = findMaxElement(a);
-        System.out.println();
-        System.out.println("Max element in array : " + max);
+        int[] a = {7,8,12};
+        int[] b = {1,2,11} ;
+        int m = a.length;
+        int n = b.length;
+        int [] c = new int[m + n] ;
 
-        int min = findMinElement(a) ;
+        mergeSortedArray(a,b,c,m,n);
 
-        System.out.println("Min element in array : " + min);
+    }
+    public static void mergeSortedArray(int[] A, int[] B, int[] C, int m, int n){
+        int i = 0, j = 0, k = 0;
+
+        while (i < m && j < n){
+            if (A[i] < B[j]){
+                C[k++] = A[i++];
+            }else{
+               C[k++] = B[j++] ;
+            }
+        }
+        // copy all remaining element from A to C
+        while(i < m) {
+            C[k++] = A[i++];
+        }
+        // copy all remaining element from B to C
+        while(j < n) {
+            C[k++] = B[j++] ;
+        }
+        printArray(C);
     }
 
     public static void printArray(int[] a){
-        for(int i : a){
+        for (int i : a){
             System.out.print(i + " ");
         }
-    }
-    public static int findMaxElement(int[]a){
-        int max = Integer.MIN_VALUE ;
-
-        for(int i : a){
-           if (max < i) {
-               max = i ;
-           }
-
-        }
-        return max ;
-
-    }
-
-    public static int findMinElement(int[] a) {
-        int min = Integer.MAX_VALUE;
-        for(int i : a) {
-            if (min > i) {
-                min =i;
-            }
-        }
-        return min ;
     }
 }
 
 /*
-Printing array elements
-20 18 0 -1 70
-Max element in array : 70
-Min element in array : -1
-
+1 2 7 8 11 12
  */
