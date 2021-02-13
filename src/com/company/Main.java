@@ -1,68 +1,65 @@
-package com.company;
+package com.company;/*
+Move all negative numbers to beginning and positive to end with constant extra space
 
-/*
-Given an array which consists of only 0, 1 and 2. Sort the array without using any sorting algo
+An array contains both positive and negative numbers in random order. Rearrange the array elements so that all negative numbers appear before all positive numbers.
+Examples :
 
-Given an array of size N containing only 0s, 1s, and 2s; sort the array in ascending order.
-
-
-Example 1:
-
-Input:
-N = 5
-arr[]= {0 2 1 2 0}
-Output:
-0 0 1 2 2
-Explanation:
-0s 1s and 2s are segregated
-into ascending order.
+Input: -12, 11, -13, -5, 6, -7, 5, -3, -6
+Output: -12 -13 -5 -7 -3 -6 11 6 5
  */
+
 public class Main {
+
     public static void main(String[] args) {
-        int [] arr = {0,2,1,2,0} ;
-        int size = arr.length;
+        int [] a = {-12,11,-13,-5,6,-7,5,-3,-6} ;
 
-//        printArray(arr);
-        sort012(arr);
-    }
-    public static void sort012(int[] a) {
+        int low = 0;
+        int high = a.length - 1;
+        int mid = low + (high - low) / 2;
 
-        int i, ct0 = 0, ct1 = 0, ct2 = 0;
-
-        for ( i = 0; i < a.length; i++){
-            switch (a[i]){
-                case 0 :
-                    ct0++;
-                    break;
-                case 1:
-                    ct1++;
-                    break;
-                case 2:
-                    ct2++ ;
-                    break;
-            }
-        }
-        i = 0 ;
-        while(ct0 > 0){
-            a[i++] = 0;
-            ct0--;
-        }
-        while(ct1 > 0){
-            a[i++] = 1;
-            ct1--;
-        }
-        while (ct2 > 0){
-            a[i++]  = 2  ;
-            ct2 --;
-        }
+        mergeSort(a,low,high);
         printArray(a);
     }
-    public static void printArray(int[] arr){
-        for(int i : arr){
+
+    public static void merge(int[] a, int low, int mid, int high){
+        int i, j , k;
+        i = low;
+        j = mid + 1;
+        k = low;
+        int [] b = new int[high + 1];
+
+        while (i <= mid && j <= high){
+            if(a[i] < a[j]){
+                b[k++] = a[i++];
+            }else{
+                b[k++] = a[j++];
+            }
+        }
+
+        while(i <= mid){
+            b[k++] = a[i++];
+        }
+        while(j <= high){
+            b[k++] = a[j++];
+        }
+
+        for(int e = low; e<= high; e++){
+            a[e] = b[e];
+        }
+    }
+    public static  void mergeSort(int[] a, int low, int high){
+int mid ;
+    if(low < high){
+        mid = low + (high - low) / 2;
+        mergeSort(a,low,mid);
+        mergeSort(a,mid+1,high);
+        merge(a,low,mid,high);
+    }
+
+    }
+    public static void printArray(int [] a){
+        for(int i : a){
             System.out.print(i + " ");
         }
     }
 }
-/*
-output: 0 0 1 2 2
- */
